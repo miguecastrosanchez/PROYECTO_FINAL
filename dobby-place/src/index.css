@@ -1,0 +1,269 @@
+
+/* =====================================
+   DOBBY PLACE - ESTILOS GENERALES
+===================================== */
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #171717;
+  background-color: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #FFFFFF;
+}
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar-dobby {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+
+  padding: 12px 4%;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E9E2DB;
+}
+
+/* LOGO */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+  text-decoration: none;
+}
+
+.logo-icono {
+  width: 72px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.logo-texto {
+  font-size: 25px;
+  font-weight: 800;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+  color: #171717;
+}
+
+.logo-texto span {
+  color: #C98B90;
+}
+
+/* MENÚ CENTRAL */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.navbar-links a {
+  position: relative;
+  padding: 12px 0;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #5A3D3B;
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+/* LÍNEA ROSADA DE 2 PX */
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+  background-color: #C98B90;
+
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #171717;
+}
+
+.navbar-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ICONOS DE USUARIO */
+
+.navbar-usuarios {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+}
+
+.navbar-usuarios a {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #C98B90;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.navbar-usuarios svg {
+  width: 30px;
+  height: 30px;
+}
+
+.navbar-usuarios a:hover {
+  color: #171717;
+}
+
+/* =====================================
+   CONTENIDO PRINCIPAL
+===================================== */
+
+main {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 5%;
+}
+
+main h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #171717;
+}
+
+main p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #5A3D3B;
+}
+
+/* =====================================
+   DISEÑO RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+  .navbar-dobby {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+
+  .logo-icono {
+    width: 56px;
+    height: 50px;
+  }
+
+  .logo-texto {
+    font-size: 21px;
+  }
+
+  .navbar-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    gap: 30px;
+  }
+
+  .navbar-usuarios {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-dobby {
+    padding: 12px 4%;
+  }
+
+  .logo-icono {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo-texto {
+    font-size: 18px;
+  }
+
+  .navbar-usuarios {
+    gap: 10px;
+  }
+
+  .navbar-usuarios svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  main {
+    padding: 40px 5%;
+  }
+
+  main h1 {
+    font-size: 30px;
+  }
+}
+
+
+
+@media (min-width: 901px) {
+  .navbar-dobby {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .navbar-links {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .navbar-usuarios {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+
+
+.usuario-activo {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  width: auto !important;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.usuario-activo span {
+  color: #171717;
+}
+
+.icono-publicar {
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+}
