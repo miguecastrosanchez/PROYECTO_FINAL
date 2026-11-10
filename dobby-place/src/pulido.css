@@ -1,0 +1,165 @@
+/* DOBBY PLACE | Pulido visual Hito 2
+   Blanco, negro, acentos rosa y movimiento discreto.
+   Se carga después de index.css para conservar la lógica y los estilos base. */
+:root {
+  --ink: #141414;
+  --muted: #65605f;
+  --paper: #ffffff;
+  --soft: #faf8f7;
+  --line: #e9e5e3;
+  --rose: #c98b90;
+  --rose-light: #f7e9eb;
+  --radius: 12px;
+}
+html { scroll-behavior: smooth; }
+body { color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--rose); outline-offset: 3px;
+}
+::selection { background: var(--rose-light); color: var(--ink); }
+.navbar-dobby {
+  min-height: 86px; padding: 10px clamp(18px, 4.5vw, 80px);
+  background: rgba(255,255,255,.97); border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(0,0,0,.015); position: relative; z-index: 5;
+}
+.logo-texto { color: var(--ink); letter-spacing: -.8px; }
+.logo-texto span { color: var(--rose); }
+.logo-icono { transition: transform .28s ease; }
+.logo:hover .logo-icono { transform: translateY(-2px) rotate(-2deg); }
+.navbar-links a { color: #353030; font-weight: 600; font-size: 14px; letter-spacing: .02em; }
+.navbar-links a::after { bottom: 6px; }
+.navbar-usuarios { gap: 13px; }
+.navbar-usuarios a:not(.usuario-activo):not(.boton-publicar) { border: 1px solid transparent; border-radius: 50%; }
+.navbar-usuarios a:not(.usuario-activo):not(.boton-publicar):hover {
+  border-color: var(--line); background: var(--soft); transform: translateY(-2px);
+}
+.navbar-usuarios .boton-publicar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--ink); color: #fff; transition: background .2s, transform .2s;
+}
+.navbar-usuarios .boton-publicar:hover { background: var(--rose); color: #fff; transform: rotate(90deg); }
+.icono-publicar { font-size: 28px; line-height: 1; }
+.navbar-usuarios .usuario-activo { width: auto; min-width: 0; gap: 8px; padding: 0 8px; border-radius: 8px; }
+.usuario-activo span { color: var(--ink); font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+main { max-width: 1320px; padding: clamp(38px, 5vw, 76px) 5%; animation: appear .4s ease both; }
+main h1 { color: var(--ink); font-size: clamp(30px, 3.5vw, 50px); line-height: 1.12; letter-spacing: -.055em; margin: 0 0 16px; }
+main p { color: var(--muted); font-size: 16px; line-height: 1.7; }
+main h2 { color: var(--ink); letter-spacing: -.035em; }
+main hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
+main section { margin: 32px 0 44px; }
+main section > h2 { font-size: 25px; margin: 0 0 14px; }
+main section > a, main > a:not(.btn), .perfil-page section > a {
+  display: inline-block; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 700;
+  border-bottom: 2px solid var(--rose); padding-bottom: 5px; margin-bottom: 20px;
+  transition: color .2s, border-color .2s;
+}
+main section > a:hover, main > a:not(.btn):hover { color: var(--rose); }
+/* Portada */
+.home-page { min-height: min(73vh, 680px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.home-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .23em; color: var(--rose); text-transform: uppercase; margin: 0 0 20px; }
+.home-page h1 { max-width: 850px; font-size: clamp(44px, 7.5vw, 100px); letter-spacing: -.075em; line-height: .98; margin-bottom: 24px; }
+.home-page h1 span { color: var(--rose); }
+.home-page > p { max-width: 550px; font-size: clamp(16px, 1.8vw, 19px); }
+.home-actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 25px; border-radius: 5px; font-size: 13px; font-weight: 750; letter-spacing: .02em; text-decoration: none; transition: transform .2s, background .2s, color .2s, border-color .2s; }
+.btn:hover { transform: translateY(-3px); }
+.btn-dark { background: var(--ink); border: 1px solid var(--ink); color: #fff; }
+.btn-dark:hover { background: #383232; }
+.btn-outline { background: var(--paper); border: 1px solid #bdb6b4; color: var(--ink); }
+.btn-outline:hover { border-color: var(--ink); background: var(--soft); }
+.home-rule { width: min(440px, 100%); height: 1px; background: var(--line); margin-top: 42px; }
+/* Galería y fichas */
+.explorar-page > p { margin-bottom: 32px; }
+.filtros { gap: 9px; border-bottom: 1px solid var(--line); padding-bottom: 25px; margin-bottom: 32px; }
+.filtro { background: #fff; border: 1px solid #ddd8d6; border-radius: 6px; color: var(--ink); font-weight: 650; font-size: 13px; padding: 11px 20px; transition: background .2s, transform .2s, border-color .2s, color .2s; }
+.filtro:hover { transform: translateY(-2px); border-color: var(--ink); background: var(--soft); }
+.filtro.activo { background: var(--ink); color: #fff; border-color: var(--ink); }
+.filtro.activo:hover { background: #333; color: #fff; }
+.productos-grid { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 22px; }
+.product-card { min-width: 0; border: 1px solid var(--line); border-radius: 9px; background: #fff; transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+.product-card:hover { transform: translateY(-5px); border-color: #d6cdca; box-shadow: 0 14px 35px rgba(25,18,18,.065); }
+.product-card > a { display: block; overflow: hidden; }
+.product-imagen { display: block; width: 100%; height: 280px; object-fit: cover; background: var(--soft); transition: transform .4s ease; }
+.product-card:hover .product-imagen { transform: scale(1.035); }
+.product-info { padding: 18px 18px 20px; border-top: 1px solid var(--line); }
+.product-info h3 { color: var(--ink); font-size: 17px; letter-spacing: -.025em; }
+.product-info p { color: var(--ink); margin: 0 0 6px; font-size: 16px; font-weight: 750; }
+.product-info span { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+.product-detalle { font-size: 13px; font-weight: 700; padding-bottom: 5px; transition: color .2s; }
+.detalle-ruta { font-size: 12px; letter-spacing: .02em; border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 35px; }
+.detalle-contenedor { gap: clamp(28px, 6vw, 80px); }
+.detalle-imagen img { width: 100%; background: var(--soft); border-radius: 8px; border: 1px solid var(--line); }
+.detalle-informacion h1 { font-size: clamp(30px, 3vw, 42px); }
+.detalle-informacion h2 { margin-top: 0; font-size: 28px; }
+.detalle-informacion p { font-size: 15px; }
+/* Formularios */
+.formulario-publicar, .formulario-auth {
+  max-width: 650px; margin: 28px auto; padding: clamp(22px,4vw,42px);
+  border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+  box-shadow: 0 10px 35px rgba(0,0,0,.025);
+}
+.formulario-publicar { gap: 11px; }
+.formulario-publicar label, .formulario-auth label { color: var(--ink); font-size: 13px; letter-spacing: .005em; font-weight: 700; margin-top: 10px; }
+.formulario-publicar input, .formulario-publicar select, .formulario-publicar textarea,
+.formulario-auth input {
+  min-height: 47px; background: #fff; color: var(--ink); border: 1px solid #d9d5d2;
+  border-radius: 6px; padding: 12px 14px; transition: border-color .2s, box-shadow .2s;
+}
+.formulario-publicar textarea { min-height: 115px; resize: vertical; }
+.formulario-publicar input:focus, .formulario-publicar select:focus, .formulario-publicar textarea:focus,
+.formulario-auth input:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(201,139,144,.14); }
+.formulario-auth { display: flex; flex-direction: column; gap: 9px; }
+.formulario-auth input { width: 100%; }
+.formulario-auth button { margin-top: 18px; }
+.formulario-auth .auth-footer { font-size: 13px; text-align: center; margin: 13px 0 0; }
+.formulario-auth .auth-footer a { color: var(--ink); font-weight: 700; text-underline-offset: 3px; }
+/* Acciones */
+button { font-family: inherit; }
+.boton-contactar, .boton-favorito, .boton-editar, .boton-eliminar,
+.formulario-auth button {
+  transition: background .2s, color .2s, border-color .2s, transform .2s, box-shadow .2s;
+}
+.boton-contactar, .formulario-auth button { background: var(--ink); color: #fff; border: 1px solid var(--ink); border-radius: 6px; font-weight: 700; }
+.boton-contactar:hover:not(:disabled), .formulario-auth button:hover:not(:disabled) { background: #383132; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,.11); }
+.boton-contactar:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.boton-favorito { border: 1px solid #cdbec0; border-radius: 6px; font-weight: 700; }
+.boton-favorito:hover { background: var(--rose-light); border-color: var(--rose); transform: translateY(-2px); }
+.acciones-publicacion { gap: 9px; }
+.boton-editar, .boton-eliminar { border-radius: 6px; font-weight: 700; padding: 11px 8px; }
+.boton-editar { color: #fff; background: var(--ink); border-color: var(--ink); }
+.boton-editar:hover { background: #3b3434; color: #fff; transform: translateY(-2px); }
+.boton-eliminar { background: #fff; color: var(--ink); border-color: #d5c3c5; }
+.boton-eliminar:hover { background: var(--rose-light); border-color: var(--rose); color: var(--ink); transform: translateY(-2px); }
+/* Perfil */
+.perfil-page > h1 { margin-bottom: 10px; }
+.perfil-page > h2 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.perfil-page > p { font-size: 14px; }
+.perfil-page section { padding-top: 4px; }
+.perfil-page .productos-grid { margin-top: 8px; }
+.perfil-page > .boton-contactar { max-width: 220px; font-size: 14px; padding: 14px; }
+@keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1100px) { .productos-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 900px) {
+  .navbar-dobby { grid-template-columns: minmax(0,1fr) auto; }
+  .navbar-links { grid-row: 2; grid-column: 1/-1; }
+  .navbar-usuarios { grid-column: 2; grid-row: 1; }
+  .usuario-activo span { max-width: 100px; }
+}
+@media (max-width: 600px) {
+  .productos-grid { grid-template-columns: minmax(0,1fr); gap: 17px; }
+  .product-imagen { height: 310px; }
+  .navbar-dobby { gap: 10px; padding: 10px 4%; }
+  .navbar-links { justify-content: center; gap: 26px; }
+  .navbar-links a { font-size: 13px; }
+  .navbar-usuarios { gap: 5px; }
+  .navbar-usuarios svg { width: 23px; height: 23px; }
+  .navbar-usuarios .boton-publicar { width: 35px; height: 35px; }
+  .usuario-activo span { max-width: 68px; font-size: 12px; }
+  .formulario-publicar, .formulario-auth { padding: 20px; }
+  .home-page { min-height: 60vh; }
+  .detalle-contenedor { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

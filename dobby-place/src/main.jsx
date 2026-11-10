@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProductsProvider } from "./context/ProductsContext";
 
 import "./index.css";
+import "./pulido.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")
