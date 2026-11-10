@@ -480,3 +480,86 @@ main p {
     font-size: 28px;
   }
 }
+
+
+/* FORMULARIO DE PUBLICACIONES */
+
+.formulario-publicar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 650px;
+  margin: 35px auto;
+}
+
+.formulario-publicar label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #171717;
+  margin-top: 8px;
+}
+
+.formulario-publicar input,
+.formulario-publicar select,
+.formulario-publicar textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #DDD0C4;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  color: #171717;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.formulario-publicar input:focus,
+.formulario-publicar select:focus,
+.formulario-publicar textarea:focus {
+  outline: 2px solid #C98B90;
+  border-color: #C98B90;
+}
+
+.formulario-publicar button {
+  margin-top: 20px;
+}
+
+
+
+/* BOTONES DE ADMINISTRACIÓN */
+
+.acciones-publicacion {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.boton-editar,
+.boton-eliminar {
+  flex: 1;
+  padding: 10px;
+  border-radius: 7px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.boton-editar {
+  background-color: #F2E6DC;
+  border: 1px solid #DDD0C4;
+  color: #171717;
+}
+
+.boton-eliminar {
+  background-color: #FFFFFF;
+  border: 1px solid #C98B90;
+  color: #5A3D3B;
+}
+
+.boton-editar:hover {
+  background-color: #E8D6C8;
+}
+
+.boton-eliminar:hover {
+  background-color: #F4DEE3;
+}

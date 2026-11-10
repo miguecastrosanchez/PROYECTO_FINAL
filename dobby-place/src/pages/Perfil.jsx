@@ -7,28 +7,51 @@ import { useProducts } from "../context/ProductsContext";
 function Perfil() {
   const navigate = useNavigate();
 
-  // Obtener usuario y función de cerrar sesión
+  // USUARIO Y SESIÓN
   const { usuario, logout } = useAuth();
 
-  // Obtener publicaciones y favoritos
-  const { publicaciones, favoritos } = useProducts();
+  // PUBLICACIONES Y FAVORITOS
+  const {
+    publicaciones,
+    favoritos,
+    eliminarPublicacion,
+  } = useProducts();
 
-  // Buscar las publicaciones favoritas
-  const publicacionesFavoritas = publicaciones.filter(
-    (publicacion) => favoritos.includes(publicacion.id)
+  // MIS PUBLICACIONES
+  const misPublicaciones = publicaciones.filter(
+    (publicacion) =>
+      publicacion.usuarioEmail === usuario?.email
   );
 
-  // Cerrar sesión
+  // MIS FAVORITOS
+  const publicacionesFavoritas = publicaciones.filter(
+    (publicacion) =>
+      favoritos.includes(publicacion.id)
+  );
+
+  // CERRAR SESIÓN
   const cerrarSesion = () => {
     logout();
     navigate("/");
   };
 
-  // Comprobar que existe un usuario
+  // ELIMINAR UNA PUBLICACIÓN
+  const manejarEliminar = (id) => {
+    const confirmar = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta publicación?"
+    );
+
+    if (!confirmar) return;
+
+    eliminarPublicacion(id, usuario.email);
+  };
+
+  // VERIFICAR SESIÓN
   if (!usuario) {
     return (
       <main>
         <h1>Mi perfil</h1>
+
         <p>Debes iniciar sesión para ver tu perfil.</p>
 
         <Link to="/login">
@@ -56,13 +79,69 @@ function Perfil() {
       <section>
         <h2>Mis publicaciones</h2>
 
-        <p>
-          Aquí aparecerán las prendas que publiques.
-        </p>
-
         <Link to="/publicar">
-          Crear nueva publicación
+          + Crear nueva publicación
         </Link>
+
+        {misPublicaciones.length === 0 ? (
+          <p>Todavía no has publicado ninguna prenda.</p>
+        ) : (
+          <div className="productos-grid">
+
+            {misPublicaciones.map((publicacion) => (
+              <div
+                key={publicacion.id}
+                className="product-card"
+              >
+                <img
+                  src={publicacion.imagen}
+                  alt={publicacion.titulo}
+                  className="product-imagen"
+                />
+
+                <div className="product-info">
+                  <h3>{publicacion.titulo}</h3>
+
+                  <p>
+                    ${publicacion.precio.toLocaleString("es-CL")}
+                  </p>
+
+                  <span>Talla: {publicacion.talla}</span>
+
+                  <Link
+                    to={`/detalle/${publicacion.id}`}
+                    className="product-detalle"
+                  >
+                    Ver publicación
+                  </Link>
+
+                  {/* BOTONES CRUD */}
+                  <div className="acciones-publicacion">
+
+                    <Link
+                      to={`/editar/${publicacion.id}`}
+                      className="boton-editar"
+                    >
+                      Editar
+                    </Link>
+
+                    <button
+                      type="button"
+                      className="boton-eliminar"
+                      onClick={() =>
+                        manejarEliminar(publicacion.id)
+                      }
+                    >
+                      Eliminar
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
+        )}
       </section>
 
       <hr />
@@ -76,26 +155,35 @@ function Perfil() {
             Todavía no tienes publicaciones favoritas.
           </p>
         ) : (
-          <div className="favoritos-lista">
+          <div className="productos-grid">
 
             {publicacionesFavoritas.map((publicacion) => (
               <div
                 key={publicacion.id}
-                className="favorito-item"
+                className="product-card"
               >
+                <img
+                  src={publicacion.imagen}
+                  alt={publicacion.titulo}
+                  className="product-imagen"
+                />
 
-                <h3>{publicacion.titulo}</h3>
+                <div className="product-info">
+                  <h3>{publicacion.titulo}</h3>
 
-                <p>
-                  ${publicacion.precio.toLocaleString("es-CL")}
-                </p>
+                  <p>
+                    ${publicacion.precio.toLocaleString("es-CL")}
+                  </p>
 
-                <p>Talla: {publicacion.talla}</p>
+                  <span>Talla: {publicacion.talla}</span>
 
-                <Link to={`/detalle/${publicacion.id}`}>
-                  Ver publicación
-                </Link>
-
+                  <Link
+                    to={`/detalle/${publicacion.id}`}
+                    className="product-detalle"
+                  >
+                    Ver publicación
+                  </Link>
+                </div>
               </div>
             ))}
 
@@ -108,6 +196,7 @@ function Perfil() {
       {/* CERRAR SESIÓN */}
       <button
         type="button"
+        className="boton-contactar"
         onClick={cerrarSesion}
       >
         Cerrar sesión
