@@ -1,0 +1,16 @@
+
+# Dependencias
+node_modules/
+**/node_modules/
+
+# Variables privadas
+.env
+.env.*
+!.env.example
+
+# Archivos de macOS
+.DS_Store
+
+# Archivos generados
+dist/
+coverage/
