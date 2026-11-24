@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Registro() {
   const navigate = useNavigate();
-  const [nombre, setNombre] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repetirPassword, setRepetirPassword] = useState("");
-
-  const manejarRegistro = (e) => {
-    e.preventDefault();
-    if (password !== repetirPassword) {
-      alert("Las contraseñas no coinciden.");
-      return;
-    }
-    // Hito 2: solo demostración de interfaz; aún no se crea una cuenta real.
-    alert("Formulario de registro validado. El registro real se conectará al backend en el siguiente hito.");
-    navigate("/login");
+  const { registrar } = useAuth();
+  const [form, setForm] = useState({ nombre: "", email: "", lugar: "", password: "", repetirPassword: "" });
+  const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
+  const cambio = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const manejarRegistro = async (e) => {
+    e.preventDefault(); setError("");
+    if (form.password !== form.repetirPassword) { setError("Las contraseñas no coinciden."); return; }
+    setEnviando(true);
+    try { await registrar(form); navigate("/login", { replace: true }); }
+    catch (err) { setError(err.message); }
+    finally { setEnviando(false); }
   };
 
   return (
@@ -25,19 +24,20 @@ function Registro() {
       <p>Únete a DOBBY PLACE y comparte prendas con la comunidad.</p>
       <form className="formulario-auth" onSubmit={manejarRegistro}>
         <label htmlFor="nombre">Nombre</label>
-        <input id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Tu nombre" required />
+        <input id="nombre" name="nombre" value={form.nombre} onChange={cambio} placeholder="Tu nombre" required />
         <label htmlFor="registro-email">Correo electrónico</label>
-        <input id="registro-email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo@ejemplo.cl" required />
+        <input id="registro-email" name="email" type="email" autoComplete="email" value={form.email} onChange={cambio} placeholder="correo@ejemplo.cl" required />
+        <label htmlFor="lugar">Lugar</label>
+        <input id="lugar" name="lugar" value={form.lugar} onChange={cambio} placeholder="Ej: Iquique" required />
         <label htmlFor="registro-password">Contraseña</label>
-        <input id="registro-password" type="password" autoComplete="new-password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 6 caracteres" required />
+        <input id="registro-password" name="password" type="password" autoComplete="new-password" minLength={8} value={form.password} onChange={cambio} placeholder="Mínimo 8 caracteres" required />
         <label htmlFor="repetir-password">Repetir contraseña</label>
-        <input id="repetir-password" type="password" autoComplete="new-password" minLength={6} value={repetirPassword} onChange={(e) => setRepetirPassword(e.target.value)} placeholder="Repite tu contraseña" required />
-        <button type="submit" className="boton-contactar">Continuar</button>
-        <p className="auth-footer">Esta es una demostración frontend; aún no crea usuarios reales.</p>
+        <input id="repetir-password" name="repetirPassword" type="password" autoComplete="new-password" minLength={8} value={form.repetirPassword} onChange={cambio} required />
+        {error && <p className="mensaje-error" role="alert">{error}</p>}
+        <button type="submit" className="boton-contactar" disabled={enviando}>{enviando ? "Registrando..." : "Crear cuenta"}</button>
         <p className="auth-footer">¿Ya tienes cuenta? <Link to="/login">Iniciar sesión</Link></p>
       </form>
     </main>
   );
 }
-
 export default Registro;

@@ -33,7 +33,10 @@ function Publicar() {
   };
 
   // GUARDAR PUBLICACIÓN
-  const manejarEnvio = (e) => {
+  const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
+
+  const manejarEnvio = async (e) => {
     e.preventDefault();
 
     if (!usuario) {
@@ -63,9 +66,12 @@ function Publicar() {
       usuarioEmail: usuario.email,
     };
 
-    const id = agregarPublicacion(nuevaPublicacion);
-
-    navigate(`/detalle/${id}`);
+    setEnviando(true); setError("");
+    try {
+      const id = await agregarPublicacion(nuevaPublicacion);
+      navigate(`/detalle/${id}`);
+    } catch (err) { setError(err.message); }
+    finally { setEnviando(false); }
   };
 
   return (
@@ -162,8 +168,9 @@ function Publicar() {
           placeholder="https://ejemplo.com/imagen.jpg"
         />
 
-        <button type="submit" className="boton-contactar">
-          Publicar prenda
+        {error && <p role="alert" className="mensaje-error">{error}</p>}
+        <button type="submit" className="boton-contactar" disabled={enviando}>
+          {enviando ? "Publicando..." : "Publicar prenda"}
         </button>
       </form>
     </main>

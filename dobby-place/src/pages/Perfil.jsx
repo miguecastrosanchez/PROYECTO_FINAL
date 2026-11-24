@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
@@ -14,13 +15,13 @@ function Perfil() {
   const {
     publicaciones,
     favoritos,
-    eliminarPublicacion,
+    eliminarPublicacion, cargandoProductos, errorProductos,
   } = useProducts();
 
   // MIS PUBLICACIONES
   const misPublicaciones = publicaciones.filter(
     (publicacion) =>
-      publicacion.usuarioEmail === usuario?.email
+      publicacion.usuarioId === Number(usuario?.id)
   );
 
   // MIS FAVORITOS
@@ -36,14 +37,16 @@ function Perfil() {
   };
 
   // ELIMINAR UNA PUBLICACIÓN
-  const manejarEliminar = (id) => {
+  const [error, setError] = useState("");
+  const manejarEliminar = async (id) => {
     const confirmar = window.confirm(
       "¿Estás seguro de que deseas eliminar esta publicación?"
     );
 
     if (!confirmar) return;
 
-    eliminarPublicacion(id, usuario.email);
+    try { await eliminarPublicacion(id); }
+    catch (err) { setError(err.message); }
   };
 
   // VERIFICAR SESIÓN
@@ -74,6 +77,10 @@ function Perfil() {
       </p>
 
       <hr />
+
+      {error && <p role="alert" className="mensaje-error">{error}</p>}
+      {errorProductos && <p role="alert" className="mensaje-error">{errorProductos}</p>}
+      {cargandoProductos && <p>Cargando publicaciones...</p>}
 
       {/* MIS PUBLICACIONES */}
       <section>

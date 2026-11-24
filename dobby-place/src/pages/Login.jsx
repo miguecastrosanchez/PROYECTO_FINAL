@@ -7,15 +7,16 @@ function Login() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
-  const iniciarSesion = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert("Completa todos los campos");
-      return;
-    }
-    login(email);
-    navigate("/perfil");
+  const iniciarSesion = async (e) => {
+    e.preventDefault(); setError(""); setEnviando(true);
+    try {
+      await login(email, password);
+      navigate("/perfil", { replace: true });
+    } catch (err) { setError(err.message); }
+    finally { setEnviando(false); }
   };
 
   return (
@@ -27,11 +28,11 @@ function Login() {
         <input id="email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="correo@ejemplo.cl" required />
         <label htmlFor="password">Contraseña</label>
         <input id="password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Tu contraseña" required />
-        <button type="submit" className="boton-contactar">Iniciar sesión</button>
+        {error && <p role="alert" className="mensaje-error">{error}</p>}
+        <button type="submit" className="boton-contactar" disabled={enviando}>{enviando ? "Ingresando..." : "Iniciar sesión"}</button>
         <p className="auth-footer">¿No tienes cuenta? <Link to="/registro">Crear cuenta</Link></p>
       </form>
     </main>
   );
 }
-
 export default Login;

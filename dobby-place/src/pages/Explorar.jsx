@@ -6,7 +6,7 @@ import { useProducts } from "../context/ProductsContext";
 
 function Explorar() {
   const [categoria, setCategoria] = useState("Todas");
-  const { publicaciones } = useProducts();
+  const { publicaciones, cargandoProductos, errorProductos } = useProducts();
   const categorias = [
     "Todas",
     "Poleras",
@@ -44,6 +44,9 @@ function Explorar() {
         ))}
       </div>
 
+      {cargandoProductos && <p>Cargando prendas...</p>}
+      {errorProductos && <p role="alert" className="mensaje-error">{errorProductos}</p>}
+      {!cargandoProductos && !errorProductos && publicacionesFiltradas.length === 0 && <p>Aún no hay prendas en esta categoría.</p>}
       <div className="productos-grid">
         {publicacionesFiltradas.map((publicacion) => (
           <ProductCard

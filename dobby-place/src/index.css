@@ -1,4 +1,3 @@
-
 /* =====================================
    DOBBY PLACE - ESTILOS GENERALES
 ===================================== */
@@ -563,3 +562,5 @@ main p {
 .boton-eliminar:hover {
   background-color: #F4DEE3;
 }
+
+.mensaje-error { color: #9a263d; border-left: 2px solid #c98b90; padding: 10px 14px; background: #fff6f7; }

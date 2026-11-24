@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { useProducts } from "../context/ProductsContext";
@@ -19,13 +20,18 @@ function Detalle() {
     publicaciones,
     agregarFavorito,
     quitarFavorito,
-    esFavorito,
+    esFavorito, cargandoProductos, errorProductos,
   } = useProducts();
 
   // Buscar la publicación seleccionada
   const publicacion = publicaciones.find(
     (item) => item.id === Number(id)
   );
+
+  const [error, setError] = useState("");
+  const [guardando, setGuardando] = useState(false);
+  if (cargandoProductos) return <main><p>Cargando publicación...</p></main>;
+  if (errorProductos) return <main><p role="alert">{errorProductos}</p></main>;
 
   // Si la publicación no existe
   if (!publicacion) {
@@ -41,7 +47,7 @@ function Detalle() {
   }
 
   // Agregar o quitar una publicación de favoritos
-  const manejarFavorito = () => {
+  const manejarFavorito = async () => {
     // Si no hay sesión, ir al Login
     if (!usuario) {
       navigate("/login");
@@ -49,11 +55,12 @@ function Detalle() {
     }
 
     // Comprobar si ya está en favoritos
-    if (esFavorito(publicacion.id)) {
-      quitarFavorito(publicacion.id);
-    } else {
-      agregarFavorito(publicacion.id);
-    }
+    setError(""); setGuardando(true);
+    try {
+      if (esFavorito(publicacion.id)) await quitarFavorito(publicacion.id);
+      else await agregarFavorito(publicacion.id);
+    } catch (err) { setError(err.message); }
+    finally { setGuardando(false); }
   };
 
   return (
@@ -111,11 +118,13 @@ function Detalle() {
             Contactar al vendedor
           </button>
 
+          {error && <p role="alert" className="mensaje-error">{error}</p>}
           {/* GUARDAR O QUITAR FAVORITOS */}
           <button
             type="button"
             className="boton-favorito"
             onClick={manejarFavorito}
+            disabled={guardando}
           >
             {esFavorito(publicacion.id)
               ? "♥ Quitar de favoritos"
